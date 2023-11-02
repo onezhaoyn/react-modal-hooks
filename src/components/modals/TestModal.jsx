@@ -1,24 +1,24 @@
 import { Form, Input, InputNumber } from '@arco-design/web-react';
-import { useMemo } from 'react';
-import { createModalInstance, Modal, useModal } from '../UI/Modal';
+import { sleep } from '../../utils/sleep';
+import { createModalInstance, ModalWrapper, useModalByID } from '../UI/Modal';
 
-const MODAL_ID = 'testmodal1';
+export const MODAL_ID = 'testmodal';
 
-export const TestModal1 = createModalInstance(MODAL_ID, (props) => {
+export const TestModal = createModalInstance(MODAL_ID, (props) => {
   const [form] = Form.useForm();
-  const { hide } = useModal(MODAL_ID);
+  const { hide, resolve } = useModalByID(MODAL_ID);
+  const { user } = props;
 
   return (
-    <Modal
+    <ModalWrapper
       title="hello1"
       {...props}
       onOk={async () => {
         const vals = form.getFieldsValue();
-        console.log('vals: ', vals);
-        hide();
+        resolve(vals);
       }}
     >
-      <Form form={form}>
+      <Form form={form} initialValues={user}>
         <Form.Item field="name" label="Name">
           <Input />
         </Form.Item>
@@ -26,6 +26,6 @@ export const TestModal1 = createModalInstance(MODAL_ID, (props) => {
           <InputNumber />
         </Form.Item>
       </Form>
-    </Modal>
+    </ModalWrapper>
   );
 });

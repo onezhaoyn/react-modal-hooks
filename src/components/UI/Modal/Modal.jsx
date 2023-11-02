@@ -1,17 +1,17 @@
 import { Modal } from '@arco-design/web-react';
-import { useCallback } from 'react';
-import { useModal } from './useModal';
+import { useModalByID } from './useModalByID';
 
 // UI 层
 export const ModalWrapper = ({ id, children, ...rest }) => {
-  const { show, hide, visible } = useModal(id);
-
+  const { showWithProps: show, hide, visible, props = {} } = useModalByID(id);
+  console.log('props: ', props);
   return (
     <Modal
       visible={visible}
       mountOnEnter={false}
       onOk={() => show()}
       onCancel={() => hide()}
+      {...props}
       {...rest}
     >
       {children}

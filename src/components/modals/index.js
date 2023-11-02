@@ -1,2 +1,1 @@
-export * from './TestModal1';
-export * from './TestModal2';
+export * from './TestModal';

@@ -1,18 +1,25 @@
 import { createStore } from 'redux';
 
 const modalReducer = (state = {}, action) => {
-  const { type, payload = {} } = action;
+  const { type, payload } = action;
+  const { modalID, props } = payload ?? {};
 
   switch (type) {
     case 'modal/show':
       return {
         ...state,
-        [payload.modalID]: true,
+        [modalID]: {
+          visible: true,
+          props,
+        },
       };
     case 'modal/hide':
       return {
         ...state,
-        [payload.modalID]: false,
+        [modalID]: {
+          visible: false,
+          props,
+        },
       };
     default:
       return state;

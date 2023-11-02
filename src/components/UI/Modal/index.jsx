@@ -1,15 +1,16 @@
-export { ModalWrapper as Modal } from './Modal.jsx';
+export { ModalWrapper } from './Modal.jsx';
 export { modalStore } from './store.jsx';
-import { useModal } from './useModal';
-export { useModal };
+import { useModalByID } from './useModalByID';
+export { useModalByID };
 
-export function createModalInstance(modalID, RenderModal) {
-  const ModalInstance = (props = {}) => {
-    const { visible } = useModal(modalID);
+export function createModalInstance(modalID, ModalComp) {
+  return (props = {}) => {
+    const { visible, props: modalProps } = useModalByID(modalID);
     if (!visible) {
       return null;
     }
-    return <RenderModal id={modalID} {...props} />;
+
+    console.log('RenderModal props: ', props);
+    return <ModalComp id={modalID} {...modalProps} {...props} />;
   };
-  return ModalInstance;
 }
